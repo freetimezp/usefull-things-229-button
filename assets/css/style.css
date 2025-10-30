@@ -1,77 +1,107 @@
 * {
-    padding: 0;
     margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    list-style: none;
-    list-style-type: none;
 }
-
-a {
-    text-decoration: none;
-}
-
 body {
-    width: 100vw;
     height: 100vh;
+    width: 100vw;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at center, #010a18, #000);
+    font-family: "Poppins", sans-serif;
 }
 
-.container {
+/* Background space layer */
+#space {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+/* Halo canvas layer */
+#halo {
     position: absolute;
+    width: 400px;
+    height: 400px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 1;
+    pointer-events: none;
+    filter: drop-shadow(0 0 20px #00bfff);
 }
 
+/* Central button */
 .btn {
-    font-family: Arial, Helvetica, sans-serif;
+    font-size: 28px;
+    font-weight: 600;
     text-transform: uppercase;
-    font-size: 30px;
-    width: 240px;
-    height: 60px;
-    border-radius: 80px;
-    line-height: 60px;
-    text-align: center;
-    border: 2px solid #005a96;
-    display: block;
-    color: #005a96;
+    padding: 18px 50px;
+    border: 2px solid #00bfff;
+    border-radius: 60px;
+    color: #00bfff;
+    background: transparent;
+    cursor: pointer;
     position: relative;
     overflow: hidden;
-    background: transparent;
-    transition: 0.3s;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 191, 255, 0.2);
+    letter-spacing: 2px;
+    z-index: 2;
 }
-
 .btn::before {
     content: "";
-    width: 100%;
-    height: 100%;
     position: absolute;
-    background: #005a96;
-    opacity: 0.6;
-    top: -100%;
-    left: 0;
-    z-index: -1;
+    top: 0;
+    left: -150%;
+    width: 150%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent 0%, rgba(0, 191, 255, 0.2) 50%, transparent 100%);
+    transform: skewX(-20deg);
     transition: 0.5s;
 }
-
 .btn::after {
     content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    position: absolute;
-    background: #005a96;
-    top: -100%;
-    left: 0;
-    z-index: -1;
-    transition: 0.5s;
-    transition-delay: 0.2s;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 191, 255, 0.4), transparent 60%);
+    opacity: 0;
+    transition: 0.5s ease;
+    filter: blur(10px);
 }
-
-.btn:hover {
-    color: #fff;
-}
-
-.btn:hover::after,
 .btn:hover::before {
-    top: 0;
+    left: 150%;
+}
+
+/* Sparks */
+.spark {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #00bfff;
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff;
+    opacity: 0;
+    transform: scale(0);
+    animation: fly 0.8s forwards;
+}
+@keyframes fly {
+    0% {
+        opacity: 1;
+        transform: scale(1) translate(0, 0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0) translate(var(--tx), var(--ty));
+    }
 }
